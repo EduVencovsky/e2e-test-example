@@ -45,10 +45,19 @@ jobs:
         with:
           node-version: '14.x'
           cache: 'yarn'
-          cache-dependency-path: '**/package-lock.json'
+          cache-dependency-path: '**/yarn.lock'
+          
+              
+      - name: Working dir
+        run: cd server/   
           
       - name: Install dependencies
         run: yarn   
+
+      - name: Set env files
+        run: 'echo "$PRODUCTION_TEST_E2E" > .env'
+        env:
+          STAGING_ENV_FILE: ${{ secrets.PRODUCTION_TEST_E2E }}
 
       - name: Run unit test
         run: yarn test
