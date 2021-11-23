@@ -18,7 +18,10 @@ jobs:
     environment: production
     # Docker Hub image that `container-job` executes in
     container: node:14
-
+    defaults:
+      run:
+       working-directory: ./server 
+    
     # Service containers to run with `container-job`
     services:
       # Label used to access the service container
@@ -47,17 +50,13 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: '**/yarn.lock'
           
-              
-      - name: Working dir
-        run: cd server/   
-          
       - name: Install dependencies
         run: yarn   
 
       - name: Set env files
         run: 'echo "$PRODUCTION_TEST_E2E" > .env'
         env:
-          STAGING_ENV_FILE: ${{ secrets.PRODUCTION_TEST_E2E }}
+          PRODUCTION_TEST_E2E: ${{ secrets.PRODUCTION_TEST_E2E }}
 
       - name: Run unit test
         run: yarn test
