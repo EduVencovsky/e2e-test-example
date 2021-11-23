@@ -17,6 +17,10 @@ jobs:
     environment: production
     # Docker Hub image that `container-job` executes in
     container: node:14
+    defaults:
+      run:
+        working-directory: ./server
+        
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -26,8 +30,6 @@ jobs:
         with:
           node-version: '14.x'
           cache: 'yarn'
-      - name: Use server folder
-        run: cd server/
       - name: Install dependencies
         run: yarn      
         
@@ -66,8 +68,6 @@ jobs:
           node-version: '14.x'
           cache: 'yarn'
 
-      - name: Use server folder
-        run: cd server/
       - name: Install dependencies
         run: yarn      
       - name: Run unit test
