@@ -21,7 +21,6 @@ import { ProductModule } from './product/product.module';
         database: configService.get<string>('DB_DATABASE'),
         autoLoadEntities: true,
         synchronize: configService.get('NODE_ENV') !== 'production',
-        keepConnectionAlive: configService.get('NODE_ENV') === 'test',
       }),
     }),
   ],
