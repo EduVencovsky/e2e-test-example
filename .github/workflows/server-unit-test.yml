@@ -15,6 +15,7 @@ jobs:
   server-unit-test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    environment: test
     # Docker Hub image that `container-job` executes in
     container: node:14
     defaults:
