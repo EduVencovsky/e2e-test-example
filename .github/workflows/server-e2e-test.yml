@@ -57,8 +57,5 @@ jobs:
         env:
           PRODUCTION_TEST_E2E: ${{ secrets.PRODUCTION_TEST_E2E }}
 
-      - name: Run unit test
-        run: yarn test
-
       - name: Run e2e test
         run: yarn test:e2e
