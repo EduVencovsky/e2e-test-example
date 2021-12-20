@@ -1,27 +1,27 @@
-name: Production End-to-end Server Test
+name: Server End-to-end Test
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   pull_request:
-    branches: 
+    branches:
       - main
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:     
+jobs:
   # This workflow contains a single job called "build"
-  production-e2e-server-test:
+  server-e2e-test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    environment: production
+    environment: test
     # Docker Hub image that `container-job` executes in
     container: node:14
     defaults:
       run:
-       working-directory: ./server 
-    
+        working-directory: ./server
+
     # Service containers to run with `container-job`
     services:
       # Label used to access the service container
@@ -37,6 +37,9 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -46,20 +49,17 @@ jobs:
       - name: Use Node.js 14.x
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
-          cache: 'yarn'
-          cache-dependency-path: '**/yarn.lock'
-          
+          node-version: "14.x"
+          cache: "yarn"
+          cache-dependency-path: "**/yarn.lock"
+
       - name: Install dependencies
-        run: yarn   
+        run: yarn
 
       - name: Set env files
         run: 'echo "$PRODUCTION_TEST_E2E" > .env'
         env:
           PRODUCTION_TEST_E2E: ${{ secrets.PRODUCTION_TEST_E2E }}
 
-      - name: Run unit test
-        run: yarn test
-        
       - name: Run e2e test
         run: yarn test:e2e
