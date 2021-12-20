@@ -1,4 +1,4 @@
-name: Production End-to-end Server Test
+name: Server End-to-end Test
 
 # Controls when the workflow will run
 on:
