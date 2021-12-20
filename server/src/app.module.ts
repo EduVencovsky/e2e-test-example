@@ -24,6 +24,7 @@ import { ProductModule } from './product/product.module';
           autoLoadEntities: true,
           synchronize: configService.get('NODE_ENV') !== 'production',
         };
+        console.log('ENV', a);
         return a;
       },
     }),
