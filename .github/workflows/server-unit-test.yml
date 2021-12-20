@@ -37,10 +37,5 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Set env files
-        run: 'echo "$PRODUCTION_TEST_E2E" > .env'
-        env:
-          PRODUCTION_TEST_E2E: ${{ secrets.PRODUCTION_TEST_E2E }}
-
       - name: Run unit test
         run: yarn test
